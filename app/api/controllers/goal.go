@@ -31,15 +31,15 @@ func NewGoalController(
 
 // Получение
 
-//	@Security		ApiKeyAuth
-//	@summary		List goals
-//	@tags			goal
-//	@Description	Получение бюджетов
-//	@ID				goal-list
-//	@Accept			json
-//	@Produce		json
-//	@Success		200	{array}	models.GoalGetResponse
-//	@Router			/goal [get]
+// @Security		ApiKeyAuth
+// @summary		List goals
+// @tags			goal
+// @Description	Получение бюджетов
+// @ID				goal-list
+// @Accept			json
+// @Produce		json
+// @Success		200	{array}	models.GoalGetResponse
+// @Router			/goal [get]
 func (gc GoalController) List(c *gin.Context) {
 	userID, ok := c.Get(constants.UserID)
 	if !ok {
@@ -50,11 +50,9 @@ func (gc GoalController) List(c *gin.Context) {
 	}
 
 	goals, err := gc.service.List(userID.(uint))
-	// TODO: Улучшить обработку ошибок
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":       "Failed to get goals",
-			"description": err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
@@ -72,15 +70,15 @@ func (gc GoalController) List(c *gin.Context) {
 
 // Создание
 
-//	@Security		ApiKeyAuth
-//	@summary		Create goal
-//	@tags			goal
-//	@Description	Создание бюджета
-//	@ID				goal-create
-//	@Accept			json
-//	@Produce		json
-//	@Param			goal	body	models.GoalCreateRequest	true	"Данные бюждета"
-//	@Router			/goal [post]
+// @Security		ApiKeyAuth
+// @summary		Create goal
+// @tags			goal
+// @Description	Создание бюджета
+// @ID				goal-create
+// @Accept			json
+// @Produce		json
+// @Param			goal	body	models.GoalCreateRequest	true	"Данные бюждета"
+// @Router			/goal [post]
 func (gc GoalController) Create(c *gin.Context) {
 	var goal models.GoalCreateRequest
 

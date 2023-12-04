@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"gorm.io/gorm"
 
 	"finapp/lib"
@@ -31,6 +32,12 @@ func (r GoalRepository) WithTrx(trxHandle *gorm.DB) GoalRepository {
 func (r GoalRepository) Get(id, userID uint) (models.Goal, error) {
 	var goal models.Goal
 	err := r.Database.Where("user_id = ?", userID).Where("id = ?", id).First(&goal).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = errors.New("can't find goal")
+	}
+	if errors.Is(err, gorm.ErrNotImplemented) {
+		err = errors.New("unknown error")
+	}
 	return goal, err
 }
 

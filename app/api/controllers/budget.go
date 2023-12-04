@@ -31,15 +31,15 @@ func NewBudgetController(
 
 // Получение
 
-//	@Security		ApiKeyAuth
-//	@summary		Get budgets
-//	@tags			budget
-//	@Description	Получение бюджетов
-//	@ID				budget-get
-//	@Accept			json
-//	@Produce		json
-//	@Success		200	{array}	models.BudgetGetResponse
-//	@Router			/budget [get]
+// @Security		ApiKeyAuth
+// @summary		Get budgets
+// @tags			budget
+// @Description	Получение бюджетов
+// @ID				budget-get
+// @Accept			json
+// @Produce		json
+// @Success		200	{array}	models.BudgetGetResponse
+// @Router			/budget [get]
 func (bc BudgetController) Get(c *gin.Context) {
 	userID, ok := c.Get(constants.UserID)
 	if !ok {
@@ -50,11 +50,9 @@ func (bc BudgetController) Get(c *gin.Context) {
 	}
 
 	budgets, err := bc.service.List(userID.(uint))
-	// TODO: Улучшить обработку ошибок
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":       "Failed to get budgets",
-			"description": err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
@@ -72,15 +70,15 @@ func (bc BudgetController) Get(c *gin.Context) {
 
 // Создание
 
-//	@Security		ApiKeyAuth
-//	@summary		Create budget
-//	@tags			budget
-//	@Description	Создание бюджета
-//	@ID				budget-create
-//	@Accept			json
-//	@Produce		json
-//	@Param			budget	body	models.BudgetCreateRequest	true	"Данные бюждета"
-//	@Router			/budget [post]
+// @Security		ApiKeyAuth
+// @summary		Create budget
+// @tags			budget
+// @Description	Создание бюджета
+// @ID				budget-create
+// @Accept			json
+// @Produce		json
+// @Param			budget	body	models.BudgetCreateRequest	true	"Данные бюждета"
+// @Router			/budget [post]
 func (bc BudgetController) Post(c *gin.Context) {
 	var budget models.BudgetCreateRequest
 

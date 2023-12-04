@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"gorm.io/gorm"
 
 	"finapp/lib"
@@ -31,5 +32,11 @@ func (r BudgetRepository) WithTrx(trxHandle *gorm.DB) BudgetRepository {
 func (r BudgetRepository) Get(id, userID uint) (models.Budget, error) {
 	var budget models.Budget
 	err := r.Database.Where("user_id = ?", userID).Where("id = ?", id).First(&budget).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = errors.New("can't find budget")
+	}
+	if errors.Is(err, gorm.ErrNotImplemented) {
+		err = errors.New("unknown error")
+	}
 	return budget, err
 }
